@@ -1,0 +1,1315 @@
+targetted_decisions = {
+
+	#FROM is YOU
+	#ROOT is TARGET
+	
+	canaanite_baby_sacrifice = {
+		is_high_prio = no
+		ai_check_interval = 120
+		filter = close_relatives
+		ai_target_filter = close_relatives
+		#diplomacy_icon = GFX_special_bloodline_decision
+		diplomacy_icon = GFX_canaanite_baby_sacrifice
+		
+		from_potential = {
+			has_children = yes
+			OR = {
+				AND = {
+					religion = canaanite_pagan_reformed
+					has_religion_feature = religion_molochs_flame
+				}
+				has_character_modifier = baby_needs_sacrifice
+			}
+		}
+		potential = {
+			is_child_of = FROM
+			OR = {
+				is_female = no
+				FROM = { has_religion_feature = religion_equal }
+			}
+		}
+		allow = {
+			ROOT = { age < 6 }
+			FROM = { piety = 200 }
+		}
+		effect = {
+			character_event = { id = carthage.01 }
+			custom_tooltip = { text = tooltip_child_sacrifice }
+			FROM = { piety = -200 }
+		}
+		ai_will_do = {
+			factor = 0.2
+		}
+	}
+	
+	embezzle_from_treasury = {
+		ai_check_interval = 120
+		filter = self
+		ai_target_filter = self
+		diplomacy_icon = GFX_embezzle_from_treasury
+		
+        from_potential = {
+            has_wonder = wonder_carthage_harbour
+			has_wonder_upgrade = upgrade_warehouse_trade
+        }
+        potential = {
+            is_landed = yes
+        }
+        allow = {
+            FROM = {
+                NOT = {
+					age = 16
+					has_character_modifier = in_seclusion
+					has_character_modifier = recently_embezzled
+					wealth > 2000
+				}
+				prestige = 300
+            }
+        }
+        effect = {
+			random_list = {
+				10 = {
+					modifier = {
+						factor = 1.5
+						intrigue = 12
+					}
+					scaled_wealth = 5 
+				}
+				20 = {
+					modifier = {
+						factor = 1.5
+						intrigue = 12
+					}
+					scaled_wealth = 3 
+				}
+				30 = { scaled_wealth = 1.5 }
+				30 = { scaled_wealth = 0.75 }
+				10 = { scaled_wealth = 0.5 }
+			}
+			random_list = {
+				50 = {	
+					random = {
+						chance = 50
+						add_trait = deceitful
+					}
+				}
+				50 = {
+					random = {
+						chance = 75
+						add_trait = greedy
+					}
+				}
+			}
+			prestige = -300
+			add_character_modifier = { name = recently_embezzled years = 15 }
+        }   
+        ai_will_do = {factor = 0.2}
+	}
+	
+	force_embargo_decision = {
+		filter = independent_rulers
+		ai_target_filter = independent_rulers
+		ai_check_interval = 120
+		diplomacy_icon = GFX_force_embargo_decision
+		
+        from_potential = {
+            culture_group = phoenicio-punic
+			capital_scope = {	
+				capital_holding = {
+					OR = {
+						has_building = ca_continental_trade_hub
+						has_building = ct_continental_trade_hub
+					}
+				}
+			}
+        }
+        potential = {
+			OR = {	
+				independent = yes
+				is_republic = yes
+			}
+			is_landed = yes
+		}
+        allow = {
+            FROM = {
+                NOT = {has_character_modifier = in_seclusion}                
+                wealth > 750
+				age = 16
+            }
+			NOT = { 
+				has_opinion_modifier = { who = ROOT  modifier = opinion_forced_embargo }
+				has_opinion_modifier = { who = ROOT  modifier = opinion_attempted_embargo } 
+			}
+        }
+        effect = {
+			FROM = {	
+				random_list = {
+					60 = {
+					character_event = { id = carthage.34 tooltip = chance_of_failure }
+					}
+					40 = {
+						character_event = { id = carthage.33 tooltip = chance_of_success }
+					}
+				}
+				wealth = -750
+				scaled_wealth = -1.75
+			}
+			ROOT = { save_event_target_as = targetted_republic }
+        }   
+        ai_will_do = {factor = 0.4}
+    }
+}
+
+decisions = {
+	restore_carthage_kingdom = {
+		is_high_prio = yes
+		ai_check_interval = 120
+		potential = {
+			OR = { 
+				religion = canaanite_pagan
+				religion = canaanite_pagan_reformed
+				religion = amazigh
+                religion = amazigh_reformed
+			}
+			is_feudal = yes
+			culture = punic
+			is_landed = yes
+			NOT = { has_landed_title = k_carthage }
+		}
+		
+		allow = {
+			OR = {
+				religion = amazigh_reformed
+				religion = canaanite_pagan
+				religion = canaanite_pagan_reformed
+			}
+			completely_controls = d_tunis
+			completely_controls = d_kabylia
+			completely_controls = d_jerid
+			completely_controls = d_alger
+			completely_controls = d_mallorca
+			completely_controls = d_sicily
+			NOT = { 
+				has_character_modifier = in_seclusion
+			}
+			war = no
+			wealth = 250
+			has_wonder = wonder_carthage_harbour
+			
+		}
+		effect = {
+			narrative_event = { id = carthage.04 }
+			prestige = 1000
+			wealth = -250
+			custom_tooltip = {
+				text = carthage_de_jure_claims_tt
+				d_tunis = { 
+					de_jure_liege = k_carthage
+				}
+				d_kabylia = { 
+					de_jure_liege = k_carthage
+				}
+				d_jerid = { 
+					de_jure_liege = k_carthage
+				}
+				d_alger = { 
+					de_jure_liege = k_carthage
+				}
+				d_mallorca = { 
+					de_jure_liege = k_carthage
+				}
+				d_sicily = { 
+					de_jure_liege = k_carthage
+				}
+			}
+			k_carthage = { gain_title = ROOT }
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	restore_carthage_republic = {
+		is_high_prio = yes
+		ai_check_interval = 120
+		potential = {
+			OR = { 
+				religion = canaanite_pagan
+				religion = canaanite_pagan_reformed
+				religion = amazigh
+                religion = amazigh_reformed
+			}
+			is_republic = yes
+			culture = punic
+			is_landed = yes
+			NOT = { has_landed_title = k_carthage }
+		}
+		
+		allow = {
+			OR = {
+				religion = amazigh_reformed
+				religion = canaanite_pagan
+				religion = canaanite_pagan_reformed
+			}
+			OR = {			
+				AND = {	
+					completely_controls = d_tunis
+					completely_controls = d_kabylia
+					completely_controls = d_jerid
+					completely_controls = d_alger
+					completely_controls = d_mallorca
+					completely_controls = d_sicily
+				}
+				trait = carthage_debug
+			}
+			
+			NOT = { 
+				has_character_modifier = in_seclusion
+			}
+			war = no
+			wealth = 250
+			has_wonder = wonder_carthage_harbour
+			
+		}
+		effect = {
+			narrative_event = { id = carthage.05 }
+			prestige = 1000
+			wealth = -250
+			custom_tooltip = {
+				text = carthage_de_jure_claims_tt
+				d_tunis = { 
+					de_jure_liege = k_carthage
+				}
+				d_kabylia = { 
+					de_jure_liege = k_carthage
+				}
+				d_jerid = { 
+					de_jure_liege = k_carthage
+				}
+				d_alger = { 
+					de_jure_liege = k_carthage
+				}
+				d_mallorca = { 
+					de_jure_liege = k_carthage
+				}
+				d_sicily = { 
+					de_jure_liege = k_carthage
+				}
+			}
+			k_carthage = { gain_title = ROOT }
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	restore_carthaginian_trade = {
+		ai_check_interval = 120	
+		potential = {
+			OR = {
+				culture_group = phoenicio-punic
+				AND = {
+					religion = amazigh_reformed
+					has_landed_title = k_carthage
+				}
+			}
+			is_landed = yes
+			independent = yes
+			NOT = { has_global_flag = carthage_trade_hegemony }
+		}
+		allow = {
+			c_famagusta = {
+				has_trade_post = yes
+				trade_post_owner = { character = ROOT }
+			}
+			c_siracusa = {
+				has_trade_post = yes
+				trade_post_owner = { character = ROOT }
+			}
+			c_tyrus = {
+				has_trade_post = yes
+				trade_post_owner = { character = ROOT }
+			}
+			c_tunis = {
+				has_trade_post = yes
+				trade_post_owner = { character = ROOT }
+			}
+			c_murcia = {
+				has_trade_post = yes
+				trade_post_owner = { character = ROOT }
+			}
+			NOT = { has_character_modifier = in_seclusion }
+			wealth = 250
+		}
+		effect = {
+			narrative_event = {id = carthage.25}
+			wealth = -250
+			set_global_flag = carthage_trade_hegemony
+			capital_scope = {
+				capital_holding = {
+					add_holding_modifier = {
+						modifier = built_trade_hub_here
+						duration = -1
+					}
+				}
+			}
+		}
+		ai_will_do = {factor = 1}
+	}
+	
+	form_the_phoenician_marines = {
+		only_playable = yes
+		is_high_prio = yes
+		ai_check_interval = 120
+		
+		potential = {
+			NOT = { is_title_active = d_phoenician_marines }
+			culture_group = phoenicio-punic 
+			has_wonder = wonder_carthage_harbour
+			any_wonder = {	
+				has_wonder_upgrade = upgrade_warehouse_naval
+			}
+			is_landed = yes
+			independent = yes
+		}
+		
+		allow = {
+			wealth = 200
+			prestige = 200
+		}
+		
+		effect = {
+			wealth = -200
+			prestige = -200
+			hidden_tooltip = {
+				activate_title = { title = d_phoenician_marines status = yes }
+				create_character = {
+					random_traits = no
+					dynasty = random
+					religion = ROOT
+					culture = phoenician
+					female = no
+					age = 33
+					trait = brilliant_strategist
+					trait = zealous
+					trait = humble
+					trait = ambitious
+					trait = strategist
+					trait = holy_warrior
+				}
+				new_character = {
+					wealth = 500
+					d_phoenician_marines = {
+						grant_title = PREV
+					}
+					set_government_type = feudal_government
+					save_event_target_as = leader_of_phoenicians
+					create_character = {
+						random_traits = yes
+						dynasty = random
+						religion = ROOT
+						culture = phoenician
+						female = no
+						age = 16
+					}
+					create_character = {
+						random_traits = yes
+						dynasty = random
+						religion = ROOT
+						culture = phoenician
+						female = no
+						age = 18
+					}
+					create_character = {
+						random_traits = yes
+						dynasty = random
+						religion = ROOT
+						culture = phoenician
+						female = no
+						age = 18
+					}
+					create_character = {
+						random_traits = yes
+						dynasty = random
+						religion = ROOT
+						culture = phoenician
+						female = no
+						age = 20
+					}
+					create_character = {
+						random_traits = yes
+						dynasty = random
+						religion = ROOT
+						culture = phoenician
+						female = no
+						age = 25
+					}
+					create_character = {
+						random_traits = yes
+						dynasty = random
+						religion = ROOT
+						culture = phoenician
+						female = no
+						age = 26
+					}
+					create_character = {
+						random_traits = yes
+						dynasty = random
+						religion = ROOT
+						culture = phoenician
+						female = no
+						age = 28
+					}
+					create_character = {
+						random_traits = yes
+						dynasty = random
+						religion = ROOT
+						culture = phoenician
+						female = yes
+						age = 16
+					}
+					create_character = {
+						random_traits = yes
+						dynasty = random
+						religion = ROOT
+						culture = phoenician
+						female = yes
+						age = 17
+					}
+				}
+			}
+			d_phoenician_marines = {
+				set_defacto_liege = ROOT
+			}
+			event_target:leader_of_phoenicians = {
+				set_defacto_liege = ROOT
+			}
+			
+			add_character_modifier = { modifier = started_mercenary_company months = 30 }
+		}
+		
+		
+		
+		ai_will_do = {
+			factor = 0
+		}
+	}
+	
+	form_the_tanitguard = {
+		only_playable = yes
+		is_high_prio = yes
+		ai_check_interval = 120
+		
+		potential = {
+			NOT = { is_title_active = d_tanitguard }
+			religion = canaanite_pagan_reformed
+			is_landed = yes
+			independent = yes
+		}
+		
+		allow = {
+			wealth = 200
+			prestige = 200
+		}
+		
+		effect = {
+			wealth = -200
+			prestige = -200
+			piety = 200
+			narrative_event = { id = carthage.86 }
+			hidden_tooltip = {
+				activate_title = { title = d_tanitguard status = yes }
+				create_character = {
+					random_traits = no
+					dynasty = random
+					religion = ROOT
+					culture = punic
+					female = no
+					age = 33
+					trait = brilliant_strategist
+					trait = zealous
+					trait = humble
+					trait = ambitious
+					trait = strategist
+					trait = holy_warrior
+				}
+				new_character = {
+					wealth = 500
+					d_tanitguard = {
+						grant_title = PREV
+					}
+					set_government_type = feudal_government
+					save_event_target_as = leader_of_tanitguard
+					create_character = {
+						random_traits = yes
+						dynasty = random
+						religion = ROOT
+						culture = punic
+						female = no
+						age = 16
+					}
+					create_character = {
+						random_traits = yes
+						dynasty = random
+						religion = ROOT
+						culture = punic
+						female = no
+						age = 18
+					}
+					create_character = {
+						random_traits = yes
+						dynasty = random
+						religion = ROOT
+						culture = punic
+						female = no
+						age = 18
+					}
+					create_character = {
+						random_traits = yes
+						dynasty = random
+						religion = ROOT
+						culture = punic
+						female = no
+						age = 20
+					}
+					create_character = {
+						random_traits = yes
+						dynasty = random
+						religion = ROOT
+						culture = punic
+						female = no
+						age = 25
+					}
+					create_character = {
+						random_traits = yes
+						dynasty = random
+						religion = ROOT
+						culture = punic
+						female = no
+						age = 26
+					}
+					create_character = {
+						random_traits = yes
+						dynasty = random
+						religion = ROOT
+						culture = punic
+						female = no
+						age = 28
+					}
+					create_character = {
+						random_traits = yes
+						dynasty = random
+						religion = ROOT
+						culture = punic
+						female = yes
+						age = 16
+					}
+					create_character = {
+						random_traits = yes
+						dynasty = random
+						religion = ROOT
+						culture = punic
+						female = yes
+						age = 17
+					}
+				}
+			}
+		}
+		
+		
+		
+		ai_will_do = {
+			factor = 0
+		}
+	}
+	
+	phoenician_renaissance_decision = {
+		ai_check_interval = 120
+		is_high_prio = yes
+		potential = {
+			culture_group = phoenicio-punic
+			is_landed = yes
+			NOT = {
+				has_global_flag = phoenicia_restored_culture
+			}
+		}
+		allow = {
+			NOT = {
+				has_character_modifier = in_seclusion
+				trait = cynical
+				trait = travelling
+			}
+			prestige = 1500
+			completely_controls = d_ascalon
+			completely_controls = d_galilee
+			completely_controls = d_tripoli
+			completely_controls = c_acre
+			completely_controls = c_tiberias
+		}
+		effect = {
+			narrative_event = { id = carthage.35 }
+			771 = { culture = phoenician religion = ROOT }
+			770 = { culture = phoenician religion = ROOT }
+			772 = { culture = phoenician religion = ROOT }
+			set_global_flag = phoenicia_restored_culture
+			add_character_modifier = {
+				name = phoen_culture_revival
+				duration = 3650
+			}
+		}
+		ai_will_do = { factor = 1 }
+	}
+	
+	##= GO TO TEMPLE OF ASTARTE TO SERVE GODDESS =##
+	astarte_temple_female = {
+        ai_check_interval = 8
+		is_high_prio = yes
+        
+        potential = {
+			is_landed = yes
+			is_female = yes
+			age = 16
+            OR = {
+                religion = canaanite_pagan
+                religion = canaanite_pagan_reformed
+            }
+			NOR = {
+				trait = on_pilgrimage
+				has_character_modifier = failed_duty_to_astarte
+				has_character_modifier = performed_duty_to_astarte
+			}
+        }
+        allow = {
+            NOT = { has_character_modifier = in_seclusion }
+        }
+        effect = {
+            if = {
+				limit = { ai = no }
+				character_event = { id = carthage.36 tooltip = head_to_temple }
+				add_trait = on_pilgrimage
+				set_character_flag = travelled_to_astarte_temple
+			}
+			if = {
+				limit = { ai = yes }
+				add_character_modifier = { name = performed_duty_to_astarte duration = -1 }
+			}
+        }
+        ai_will_do = { factor = 1 }
+    }
+	
+	astarte_temple_male = {
+        ai_check_interval = 8
+        is_high_prio = yes
+		
+        potential = {
+			is_landed = yes
+			is_female = no
+			age = 16
+            OR = {
+                religion = canaanite_pagan
+                religion = canaanite_pagan_reformed
+            }
+			NOR = {
+				trait = on_pilgrimage
+				has_character_modifier = failed_duty_to_astarte
+				has_character_modifier = performed_duty_to_astarte
+			}
+        }
+        allow = {
+            NOR = {
+				has_character_modifier = in_seclusion
+				trait = celibate
+				trait = eunuch
+			}
+        }
+        effect = {
+			if = {
+				limit = { ai = no }
+				character_event = { id = carthage.36 tooltip = head_to_temple }
+				add_trait = on_pilgrimage
+				set_character_flag = travelled_to_astarte_temple
+			}
+			if = {
+				limit = { ai = yes }
+				add_character_modifier = { name = performed_duty_to_astarte duration = -1 }
+			}
+        }
+        ai_will_do = { factor = 1 }
+    }
+    
+    monkeys_paw_decision = {
+        ai_check_interval = 240
+        
+        potential = {
+			age = 16
+			has_artifact = monkeys_paw
+        }
+		
+        allow = {
+            NOT = { has_character_modifier = in_seclusion }
+			NOT = { trait = zealous }
+			has_focus = focus_scholarship
+            custom_tooltip = { 
+				text = discovered_necronomicon_knowledge 
+				has_artifact = necronomicon
+			}
+			NOT = { has_character_modifier = monkey_paw_cooldown }
+        }
+        effect = {
+            character_event = { id = carthage.90 }
+        }
+        ai_will_do = { factor = 0.1 }    
+    }
+	
+	hold_a_dabke = {
+		only_playable = yes
+		ai_check_interval = 12
+		potential = {
+			is_playable = yes
+			prisoner = no
+			OR = {
+				religion = canaanite_pagan
+				religion = canaanite_pagan_reformed
+				religion = baalist_pagan
+			}
+			NOR = {
+				has_character_modifier = dabke_ball_timer
+				liege = {
+					has_character_modifier = dabke_ball_timer
+				}
+			}
+			num_of_vassals = 1
+		}
+		allow = {
+			age = 16
+			war = no
+			custom_tooltip = {
+				text = UNOCCUPIED_DEMESNE_TITLE
+				hidden_tooltip = {
+					any_demesne_title = {
+						NOT = { higher_tier_than = count }
+						is_occupied = no
+					}
+				}
+			}
+			prisoner = no
+			NOT = { is_inaccessible_trigger = yes }
+			prestige = 100
+			custom_tooltip = {
+				text = is_not_busy_trigger_tooltip
+				hidden_tooltip = { NOT = { has_character_flag = do_not_disturb } }
+			}
+		}
+		effect = {
+			add_character_modifier = {
+				name = dabke_ball_timer
+				duration = -1
+			}
+			
+			hidden_tooltip = {
+				character_event = { 
+					id = cflavour.10  
+				}
+			}
+			if = {
+				limit = {
+					has_dlc = "Reapers"
+				}
+				custom_tooltip = {
+					text = capital_prospers_custom_tooltip
+					hidden_tooltip = {
+						capital_scope = {
+							change_variable = { which = prosperity_value value = 8 }
+						}
+					}
+				}
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+			
+			modifier = {
+				factor = 0
+				NOT = {
+					wealth = 200
+				}
+			}
+			modifier = {
+				factor = 0
+				trait = shy
+			}
+			modifier = {
+				factor = 0
+				NOT = { diplomacy = 10 }
+			}	
+			modifier = {
+				factor = 0
+				has_character_flag = recent_minor_decision
+				NOT = {
+					had_character_flag = {
+						flag = recent_minor_decision
+						days = 730
+					}
+				}
+			}
+		}
+	}
+	
+	mayumas_festival = {
+		only_playable = yes
+		ai_check_interval = 3
+
+		potential = {
+			is_playable = yes
+			prisoner = no
+			OR = {
+				religion = canaanite_pagan
+				religion = canaanite_pagan_reformed
+				religion = baalist_pagan
+			}
+			NOT = {
+				has_character_modifier = holding_mayumas_festival
+			}
+			num_of_vassals = 1
+			OR = {
+				NOT = { has_character_flag = recent_mayumas_festival }
+				had_character_flag = {
+					flag = recent_mayumas_festival
+					days = 60
+				}
+			}
+		}
+		allow = {
+			age = 16
+			war = no
+			custom_tooltip = {
+				text = UNOCCUPIED_DEMESNE_TITLE
+				hidden_tooltip = {
+					any_demesne_title = {
+						NOT = { higher_tier_than = count }
+						is_occupied = no
+					}
+				}
+			}
+			wealth = 25
+			prisoner = no
+			NOT = { is_inaccessible_trigger = yes }
+			OR = {
+				month < 4
+				month = 11
+			}
+			custom_tooltip = {
+				text = is_not_busy_trigger_tooltip
+				hidden_tooltip = { NOT = { has_character_flag = do_not_disturb } }
+				NOT = {
+					has_character_modifier = holding_mayumas_festival
+				}
+				OR = {
+					NOT = { has_character_flag = recent_mayumas_festival }
+					had_character_flag = {
+						flag = recent_mayumas_festival
+						days = 60
+					}
+				}
+			}
+		}
+		effect = {
+			wealth = -25
+			clr_character_flag = recent_mayumas_festival
+			add_character_modifier = {
+				name = holding_mayumas_festival
+				duration = -1
+			}
+			hidden_tooltip = {
+				character_event = {
+					id = cflavour.98
+					days = 60
+				}
+				character_event = { id = cflavour.87 }
+				character_event = { id = cflavour.88 days = 2 random = 1 }
+			}
+			if = {
+				limit = {
+					has_dlc = "Reapers"
+				}
+				custom_tooltip = {
+					text = capital_prospers_custom_tooltip
+					hidden_tooltip = {
+						capital_scope = {
+							change_variable = { which = prosperity_value value = 8 }
+						}
+					}
+				}
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+			
+			modifier = {
+				factor = 0
+				NOT = {
+					wealth = 200
+				}
+			}
+
+			modifier = {
+				factor = 0
+				trait = slothful
+			}	
+			
+			modifier = {
+				factor = 0
+				NOT = { stewardship = 10 }
+			}
+			
+			modifier = {
+				factor = 0
+				has_character_flag = recent_minor_decision
+				NOT = {
+					had_character_flag = {
+						flag = recent_minor_decision
+						days = 730
+					}
+				}
+			}			
+			
+		}
+	}
+	
+	build_a_cippus = {
+		only_playable = yes
+		ai_check_interval = 36
+		potential = {
+			is_playable = yes
+			age = 16
+			prisoner = no
+			culture_group = phoenicio-punic
+			NOT = {	has_character_modifier = built_cippus_recently }
+		}
+		allow = {
+			wealth = 100
+			prisoner = no
+			
+			custom_tooltip = {
+				text = cippus_conditions_tt
+				any_demesne_province = {
+					any_province_holding = {
+						NOT = {
+							has_holding_modifier = canaanite_built_cippus_3
+						}
+						owner = {
+							character = ROOT
+						}
+					}
+				}
+			}
+		}
+		effect = {
+			wealth = -100
+			add_character_modifier = {
+				name = built_cippus_recently
+				years = 15
+			}
+			hidden_tooltip = { 
+				character_event = { id = cflavour.108 }
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				NOT = { wealth = 300 }
+			}
+			modifier = {
+				factor = 0
+				NOT = { age = 30 }
+			}			
+		}
+	}
+	
+	form_empire_of_phoenicia = {
+		is_high_prio = yes
+		ai_check_interval = 120
+		potential = {
+			OR = {
+				AND = {
+					higher_tier_than = DUKE
+					independent = yes
+					OR = {
+						culture_group = phoenicio-punic
+						religion = amazigh_reformed
+						religion = amazigh
+					}
+					is_landed = yes
+					NOR = {
+						has_landed_title = e_phoenicia
+						has_global_flag = formed_phoenicia
+					}
+				}
+				trait = carthage_debug
+			}
+		}
+		
+		allow = {
+			NOT = { religion = amazigh }
+			OR = {
+				AND = {
+					completely_controls = k_jerusalem
+					completely_controls = d_tunis
+					completely_controls = d_tripoli
+					completely_controls = d_murcia
+					has_landed_title = k_carthage
+					custom_tooltip = {
+						text = phoenician_renaissance_done_tt
+						has_global_flag = phoenicia_restored_culture
+					}
+					NOT = { has_character_modifier = in_seclusion }
+					war = no
+					wealth = 500
+					prestige = 2500
+				}
+				hidden_tooltip = {
+					trait = carthage_debug
+				}
+			}
+		}
+		effect = {
+			narrative_event = { id = carthage.199 }
+			prestige = -2000
+			wealth = -500
+			set_global_flag = formed_phoenicia
+			e_phoenicia = { gain_title = ROOT }
+			hidden_tooltip = {	
+				primary_title = {
+					k_jerusalem = {
+						de_jure_liege = e_phoenicia
+					}
+					k_carthage = {
+						de_jure_liege = e_phoenicia
+					}
+					d_tunis = {
+						de_jure_liege = e_phoenicia
+					}
+					d_tripoli = {
+						de_jure_liege = e_phoenicia
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	invite_phoenician_nobles = {
+		only_playable = yes
+		ai_check_interval = 36
+		potential = {
+			is_playable = yes
+			age = 16
+			prisoner = no
+			culture_group = phoenicio-punic
+			has_global_flag = phoenicia_restored_culture
+			NOT = { has_character_flag = hiring_phoenician }
+		}
+		allow = {
+			scaled_wealth = 0.25
+			prisoner = no
+		}
+		effect = {
+			scaled_wealth = -0.25
+			hidden_tooltip = { 
+				character_event = { id = cflavour.120 }
+			}
+			set_character_flag = hiring_phoenician
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				NOT = { scaled_wealth = 0.3 }
+			}
+		}
+	}
+	
+	baalist_pagan_thing = {
+		ai_check_interval = 120
+		potential = {
+			age = 16
+			religion = canaanite_pagan_reformed
+			is_landed = yes
+			ai = no
+			has_global_flag = baal_text_recovered
+			has_artifact = the_baal_cycle
+			NOT = { has_global_flag = baalist_heresy_res_started }
+		}
+		
+		allow = {
+			NOT = { 
+				OR = {
+					has_character_modifier = in_seclusion
+					trait = travelling
+				}
+			}
+			war = no
+			learning = 13
+			has_focus = focus_scholarship
+			NOT = { trait = cynical }
+		}
+		effect = {
+			character_event = { id = carthage.54 }
+			set_global_flag = baalist_heresy_res_started
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
+}
+
+	
+#	send_emissary_to_empire = {
+#		ai_check_interval = 60
+#		
+#		potential = {
+#			is_playable = yes
+#			age = 16
+#			NOT = { trait = incapable }
+#			prisoner = no
+#			any_owned_bloodline	= {
+#				has_bloodline_flag = legendary_merchant_bloodline
+#			}
+#			has_global_flag = aztec_exped_done
+#		}
+#		allow = {
+#			scaled_wealth = 0.25
+#			NOR = {
+#				has_character_modifier = in_seclusion
+#				trait = on_pilgrimage
+#				trait = travelling
+#			}
+#			custom_tooltip = {	
+#				text = send_emissary_to_empire_tt
+#				NOT = {
+#					has_character_modifier = sent_emissary_to_empire
+#				}
+#			}
+#		}
+#		effect = {
+#			add_character_modifier = {
+#				name = gone_to_the_empire
+#				years = 3
+#			}
+#			hidden_tooltip = { 
+#				character_event = { id = cflavour.321 }
+#			}
+#		}
+#		revoke_allowed = {
+#			always = no
+#		}
+#		ai_will_do = {
+#			factor = 1
+#			modifier = {
+#				factor = 0.75
+#				NOT = { scaled_wealth = 0.6 }
+#			}
+#			modifier = {
+#				factor = 0.5
+#				NOT = { scaled_wealth = 0.4 }
+#			}
+#			modifier = {
+#				factor = 0
+#				NOT = { wealth = 0 }
+#			}				
+#		}
+#	}
+#}
+
+title_decisions = {
+	canaanite_dedicate_temple = {
+		filter = sub_realm_owned
+		ai_target_filter = vassal_owned
+		is_high_prio = yes
+		ai_check_interval = 120 #check only once every 120 months.
+		
+		from_potential = {
+			is_playable = yes
+			higher_tier_than = BARON
+			OR = {
+				religion = canaanite_pagan
+				religion = canaanite_pagan_reformed
+			}
+			NOR = {
+				is_tribal = yes
+				is_nomadic = yes
+				has_character_flag = flag_dedicating_temple
+			}
+		}
+		
+		potential = {
+			holding_type = temple 
+			NOR = { 
+				has_flag = flag_dedicated_to_baal_hammon
+				has_flag = flag_dedicated_to_tanit
+				has_flag = flag_dedicated_to_astarte
+				has_flag = flag_dedicated_to_eshmun
+				has_flag = flag_dedicated_to_melqart
+				has_flag = flag_dedicated_to_qadeshtu
+				has_flag = flag_dedicated_to_dagon
+				has_flag = flag_dedicated_to_shed_horon
+				has_flag = flag_dedicated_to_kothar_wa_khasis
+				has_flag = flag_dedicated_to_moloch
+				has_flag = flag_dedicated_to_mot
+				has_flag = flag_dedicated_to_yam
+			}
+		}
+		
+		allow = {
+			FROM = { wealth = 250 }
+			FROM = { piety = 200 }
+			has_siege = no
+			custom_tooltip = { 
+				text = tooltip_temple_must_have_priest
+				hidden_tooltip = { 
+					owner = { 
+						is_theocracy = yes 
+						religion = FROM 	#Temple must have an hellenic priest.
+					}
+				}
+			}
+			custom_tooltip = { 
+				text = tooltip_not_dedicated_temple_recently
+				hidden_tooltip = { 
+					FROM = { 
+						NOT = { 
+							has_character_modifier = recently_dedicated_temple_cooldown
+						}
+					}
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = { 
+				text = tooltip_hellenic_dedicate_temple 
+			}
+			FROM = { 
+				set_character_flag = flag_dedicating_temple 
+				character_event = { id = carthage.194 }
+			}
+			
+		}
+		revoke_allowed = {
+			always = no
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				ruler_has_dedicated_temple_canaanite_trigger = yes #Better to have the AI only dedicate one per lifetime, otherwise it might leave the player out of options.
+			}
+		}
+	}
+}

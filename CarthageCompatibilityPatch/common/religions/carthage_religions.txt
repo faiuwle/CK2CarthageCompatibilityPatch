@@ -1,0 +1,233 @@
+# Religion-specific opinion can be added to modifiers (E.G., norse_pagan_opinion = 5), but the modifier *has* to be defined in 00_modifier_definitions.txt as well. It also needs localisation. Works for groups as well
+
+# join_crusade_if_bordering_hostile = yes # The AI won't refrain from joining a crusade simply because it borders a heathen/heretic realm
+
+# This trigger defines who can see a character's secret religion. The character with the secret religion is FROM, while the viewer is ROOT
+# Characters can always see their own secret religion. The observer can see all secret religions
+secret_religion_visibility_trigger = {
+	secret_religion = FROM
+}
+
+# women_can_take_consorts = yes # If set, women can take consorts as well, not just men. Defaults to "no". Has no effect if max_consorts is 0
+# men_can_take_consorts = no # If set, men cannot take consorts any more. Defaults to "yes". Has no effect if max_consorts is 0
+# male_temple_holders = no # If set to no, men cannot hold temples. Defaults to "yes". You might need to update your law scripts for this to fully work (see trigger "religion_allows_male_temple_holders")
+
+
+pagan_group = {
+	has_coa_on_barony_only = yes	
+	canaanite_pagan_reformed = {
+		graphical_culture = hellenicgfx
+		alternate_start = {always = no}
+		interface_skin = { hellenic_interface }
+		allow_in_ruler_designer = no
+	
+		icon = 69
+		heresy_icon = 68
+	
+		color = { 0.39 0.3 0.6 }
+	
+		ai_convert_other_group = 2 # always try to convert
+		ai_convert_same_group = 2 # always try to convert
+	
+		high_god_name = GOD_BAAL_HAMMON
+	
+		god_names = {
+			GOD_BAAL_HAMMON
+			GOD_TANIT 
+			GOD_ASTARTE
+			GOD_ESHMUN
+			GOD_MELQART
+			GOD_HADAD
+			GOD_QADESHTU
+			GOD_DAGON
+			GOD_SHED_HORON
+			GOD_KOTHAR_WA_KHASIS
+			MOLOCH
+		}
+		evil_god_names = {
+			RESHEPH
+			MOLOCH
+			MOT
+			LOTAN
+			YAM
+			ELOH_ARAPHEL
+		}
+	
+		unit_modifier = {
+			levy_size = -0.15
+			
+			war_elephants_offensive = 0.5
+			war_elephants_defensive = 0.5
+		
+			key = "canaanite_pagan_key"
+		}
+	
+		crusade_name = GREAT_HOLY_WAR
+		scripture_name = THE_BAAL_TEXTS
+		priest_title = KHUN
+	
+		priests_can_marry = yes
+		allow_looting = yes
+		join_crusade_if_bordering_hostile = yes
+		max_consorts = 3
+	
+		divine_blood = yes
+	
+		bs_marriage = yes 
+		pc_marriage = yes 
+		cousin_marriage = yes
+		rel_head_defense = yes
+	
+		aggression = 2.0
+	
+		short_reign_opinion_year_mult = 0.5
+	
+		religious_clothing_head = 12
+		religious_clothing_priest = 11
+	
+		can_call_crusade = yes
+		crusade_cb = crusade
+	
+		intermarry = pagan_group
+		intermarry = jewish_group
+	
+		dislike_tribal_organization = no
+		can_demand_religious_conversion = yes
+	}
+	
+	canaanite_pagan = { #CARTHAGINIAN
+		graphical_culture = hellenicgfx
+		alternate_start = {always = no}
+		interface_skin = { hellenic_interface }
+		
+		icon = 67
+		heresy_icon = 68
+		
+		color = { 0.39 0.3 0.6 }
+	
+		high_god_name = GOD_BAAL_HAMMON
+		
+		god_names = {
+			GOD_BAAL_HAMMON
+			GOD_TANIT 
+			GOD_ASTARTE
+			GOD_ESHMUN
+			GOD_MELQART
+			GOD_HADAD
+			GOD_QADESHTU
+			GOD_DAGON
+			GOD_SHED_HORON
+			GOD_KOTHAR_WA_KHASIS
+			MOLOCH
+		}
+		evil_god_names = {
+			RESHEPH 
+			MOLOCH 
+			MOT 
+			LOTAN 
+			YAM 
+			ELOH_ARAPHEL
+		}
+	
+		unit_modifier = {
+			levy_size = -0.1
+			
+			war_elephants_offensive = 0.3
+			war_elephants_defensive = 0.3
+			
+			key = "canaanite_pagan_key"
+		}
+	
+		crusade_name = GREAT_HOLY_WAR
+		scripture_name = THE_BAAL_TEXTS
+		priest_title = KHUN
+	
+		priests_can_marry = yes
+		allow_looting = yes
+		max_consorts = 3
+	
+		bs_marriage = yes 
+		pc_marriage = yes 
+		cousin_marriage = yes
+		
+		aggression = 2.0 # AI aggression factor
+	
+		short_reign_opinion_year_mult = 1.5
+		
+		religious_clothing_head = 12
+		religious_clothing_priest = 11
+	
+		intermarry = pagan_group
+		intermarry = jewish_group
+		
+		reformed = canaanite_pagan_reformed
+		
+		dislike_tribal_organization = no
+		can_demand_religious_conversion = no
+		##dynamic_cult = yes
+		##dynamic_cult_template = the_cold_ones
+	}
+	
+	baalist_pagan = {
+		graphical_culture = hellenicgfx
+		alternate_start = {always = no}
+		interface_skin = { hellenic_interface }
+		allow_in_ruler_designer = no
+		
+		icon = 69
+		heresy_icon = 68
+	
+		color = { 0.23 0.2 0.5 }
+		parent = canaanite_pagan_reformed
+	
+		ai_convert_other_group = 2 # always try to convert
+		ai_convert_same_group = 2 # always try to convert
+	
+		high_god_name = GOD_BAAL
+	
+		god_names = {
+			GOD_BAAL GOD_EL GOD_CRONUS GOD_YAHWEH GOD_GOD GOD_BAAL_ZEBUB
+		}
+		evil_god_names = {
+			RESHEPH MOLOCH MOT LOTAN YAM ELOH_ARAPHEL
+		}
+	
+		unit_modifier = {
+			levy_size = 0.15
+			
+			war_elephants_offensive = 0.1
+			war_elephants_defensive = 0.1
+		
+			key = "canaanite_pagan_key"
+		}
+	
+		crusade_name = CRUSADE
+		scripture_name = THE_BAAL_TEXTS
+		priest_title = KHUN
+	
+		priests_can_marry = no
+		allow_looting = no
+		can_call_crusade = yes
+		join_crusade_if_bordering_hostile = yes
+		max_consorts = 3
+	
+		bs_marriage = no 
+		pc_marriage = no 
+		cousin_marriage = yes
+		rel_head_defense = yes
+	
+		aggression = 1.0
+	
+		short_reign_opinion_year_mult = 1.5
+	
+		religious_clothing_head = 0
+		religious_clothing_priest = 1
+	
+		intermarry = canaanite_pagan_reformed
+		intermarry = canaanite_pagan
+		intermarry = christian
+	
+		dislike_tribal_organization = no
+		can_demand_religious_conversion = yes
+	}
+}
