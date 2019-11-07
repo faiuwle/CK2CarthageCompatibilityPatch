@@ -4071,6 +4071,17 @@ add_crusade_trait_effect = {
 		add_trait = shaddai
         break = yes
 	}
+	if = {
+		limit = {
+			OR = {
+				religion = canaanite_pagan
+				religion = canaanite_pagan_reformed
+				religion = baalist_pagan
+			}
+		}
+		add_trait = kanaanim
+		break = yes
+	}
     if = {
         limit = {
             religion = bori
@@ -5191,6 +5202,10 @@ join_prev_warrior_lodge_society_effect = {
 		limit = { PREV = { society_member_of = warrior_lodge_hellenic } }
 		join_society = warrior_lodge_hellenic
 	}
+	if = {
+		limit = { PREV = { society_member_of = warrior_lodge_canaanite } }
+		join_society = warrior_lodge_canaanite
+	}	
 }
 give_this_warrior_lodge_religion_effect = { #Mostly for spawned characters.
 	if = {
@@ -25381,6 +25396,9 @@ add_warrior_lodge_leader_trait_effect = {
 		}
 		warrior_lodge_hellenic = {
 			add_trait = hellenic_leader
+		}
+		warrior_lodge_canaanite = {
+			add_trait = mahout
 		}
 	}
 }
