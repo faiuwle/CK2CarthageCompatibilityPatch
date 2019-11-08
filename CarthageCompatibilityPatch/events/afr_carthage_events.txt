@@ -12,32 +12,6 @@ narrative_event = {
     option = {
         name = EVTOPTA_AFRREL016
         
-        # Transfer k_africa, k_mauretania, and e_maghreb to de jure e_carthage
-        k_africa = { de_jure_liege = e_carthage }
-        k_mauretania = { de_jure_liege = e_carthage }
-        e_maghreb = {
-            any_direct_de_jure_vassal_title = {
-                de_jure_liege = e_carthage
-            }
-        }
-        
-        # Set up e_carthage
-		e_carthage = {
-			show_scope_change = no
-			grant_title = ROOT
-			hidden_tooltip = { make_primary_title = yes }
-			copy_title_laws = e_maghreb
-		}
-        
-        # Destroy e_maghreb
-        e_maghreb = {
-            show_scope_change = no
-            destroy_landed_title = THIS
-        }
-
-        # Deactivate e_maghreb
-        hidden_tooltip = { activate_title = { title = e_maghreb status = no } }
-        
         # Spawn announcement event
         hidden_tooltip = {
             any_playable_ruler = {
@@ -54,9 +28,6 @@ narrative_event = {
                 narrative_event = { id = AFRREL.017 days = 2 }
             }
         }
-        
-        # Add Suffete trait
-        add_trait = suffete
         
         # Give nickname The Beloved
         give_nickname = nick_the_beloved
