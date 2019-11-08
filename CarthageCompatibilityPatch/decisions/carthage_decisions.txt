@@ -199,6 +199,7 @@ decisions = {
 		}
 		effect = {
 			narrative_event = { id = carthage.04 }
+			letter_event = { id = AFRREL.016 days = 7 }
 			prestige = 1000
 			wealth = -250
 			custom_tooltip = {
@@ -272,6 +273,7 @@ decisions = {
 		}
 		effect = {
 			narrative_event = { id = carthage.05 }
+			letter_event = { id = AFRREL.016 days = 7 }
 			prestige = 1000
 			wealth = -250
 			custom_tooltip = {
