@@ -199,6 +199,20 @@ decisions = {
 		}
 		effect = {
 			narrative_event = { id = carthage.04 }
+			
+			e_roman_empire = {
+				holder_scoper = { narrative_event = { id = AFRREL.017 } }
+			}
+			e_hre = {
+				holder_scoper = { narrative_event = { id = AFRREL.017 } }
+			}
+			e_byzantium = {
+				holder_scoper = { narrative_event = { id = AFRREL.017 } }
+			}
+			e_latin_empire = {
+				holder_scoper = { narrative_event = { id = AFRREL.017 } }
+			}
+			
 			letter_event = { id = AFRREL.016 days = 7 }
 			prestige = 1000
 			wealth = -250
@@ -243,6 +257,19 @@ decisions = {
 			culture = punic
 			is_landed = yes
 			NOT = { has_landed_title = k_carthage }
+		}
+		
+		e_roman_empire = {
+			holder_scoper = { narrative_event = { id = AFRREL.017 } }
+		}
+		e_hre = {
+			holder_scoper = { narrative_event = { id = AFRREL.017 } }
+		}
+		e_byzantium = {
+			holder_scoper = { narrative_event = { id = AFRREL.017 } }
+		}
+		e_latin_empire = {
+			holder_scoper = { narrative_event = { id = AFRREL.017 } }
 		}
 		
 		allow = {
