@@ -299,8 +299,20 @@ decisions = {
 			
 		}
 		effect = {
-			narrative_event = { id = carthage.05 }
-			letter_event = { id = AFRREL.016 days = 7 }
+			if = {
+				limit = {
+					OR = {
+						religion = canaanite_pagan
+						religion = canaanite_pagan_reformed
+						religion = baalist_pagan
+					}
+				}
+				narrative_event = { id = carthage.05 }
+			}
+			else = {
+				letter_event = { id = AFRREL.016 days = 7 }
+			}
+			
 			prestige = 1000
 			wealth = -250
 			custom_tooltip = {
