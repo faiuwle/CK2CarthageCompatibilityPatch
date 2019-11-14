@@ -1,0 +1,1 @@
+# Empty file to override e_carthage definition in ARO
