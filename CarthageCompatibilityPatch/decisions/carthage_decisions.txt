@@ -161,6 +161,54 @@ targetted_decisions = {
 }
 
 decisions = {
+    restore_carthage_tribal = {
+        is_high_prio = yes
+        
+        potential = {
+            OR = {
+                religion = canaanite_pagan
+                religion = canaanite_pagan_reformed
+                religion = amazigh
+                religion = amazigh_reformed
+            }
+            is_tribal = yes
+            is_landed = yes
+        }
+        
+        allow = {
+			OR = {
+                custom_tooltip = {
+                    text = is_reformed_amazigh_tooltip
+                    religion = amazigh_reformed
+                }
+				religion = canaanite_pagan
+				religion = canaanite_pagan_reformed
+			}
+			completely_controls = d_tunis
+			completely_controls = d_kabylia
+			completely_controls = d_jerid
+			completely_controls = d_alger
+			completely_controls = d_mallorca
+			completely_controls = d_sicily
+			NOT = { 
+				has_character_modifier = in_seclusion
+			}
+            OR = {
+                is_feudal = yes
+                is_republic = yes
+            }
+			war = no
+			wealth = 250
+			has_wonder = wonder_carthage_harbour
+        }
+        
+        effect = { }
+    
+        ai_will_do = {
+            factor = 0
+        }
+    }   
+
 	restore_carthage_kingdom = {
 		is_high_prio = yes
 		ai_check_interval = 120
@@ -172,14 +220,16 @@ decisions = {
                 religion = amazigh_reformed
 			}
 			is_feudal = yes
-			culture = punic
 			is_landed = yes
 			NOT = { has_landed_title = k_carthage }
 		}
 		
 		allow = {
 			OR = {
-				religion = amazigh_reformed
+                custom_tooltip = {
+                    text = is_reformed_amazigh_tooltip
+                    religion = amazigh_reformed
+                }
 				religion = canaanite_pagan
 				religion = canaanite_pagan_reformed
 			}
@@ -198,22 +248,34 @@ decisions = {
 			
 		}
 		effect = {
-			narrative_event = { id = carthage.04 }
+            if = {
+                limit = {
+					OR = {
+						religion = canaanite_pagan
+						religion = canaanite_pagan_reformed
+						religion = baalist_pagan
+					}                
+                }
+                narrative_event = { id = carthage.04 }
 			
-			e_roman_empire = {
-				holder_scoper = { narrative_event = { id = AFRREL.017 } }
-			}
-			e_hre = {
-				holder_scoper = { narrative_event = { id = AFRREL.017 } }
-			}
-			e_byzantium = {
-				holder_scoper = { narrative_event = { id = AFRREL.017 } }
-			}
-			e_latin_empire = {
-				holder_scoper = { narrative_event = { id = AFRREL.017 } }
-			}
+                e_roman_empire = {
+                    holder_scoper = { narrative_event = { id = AFRREL.017 } }
+                }
+                e_hre = {
+                    holder_scoper = { narrative_event = { id = AFRREL.017 } }
+                }
+                e_byzantium = {
+                    holder_scoper = { narrative_event = { id = AFRREL.017 } }
+                }
+                e_latin_empire = {
+                    holder_scoper = { narrative_event = { id = AFRREL.017 } }
+                }
+            }
 			
-			letter_event = { id = AFRREL.016 days = 7 }
+            else = {
+                narrative_event = { id = AFRREL.016 }
+            }
+            
 			prestige = 1000
 			wealth = -250
 			custom_tooltip = {
@@ -254,27 +316,16 @@ decisions = {
                 religion = amazigh_reformed
 			}
 			is_republic = yes
-			culture = punic
 			is_landed = yes
 			NOT = { has_landed_title = k_carthage }
 		}
 		
-		e_roman_empire = {
-			holder_scoper = { narrative_event = { id = AFRREL.017 } }
-		}
-		e_hre = {
-			holder_scoper = { narrative_event = { id = AFRREL.017 } }
-		}
-		e_byzantium = {
-			holder_scoper = { narrative_event = { id = AFRREL.017 } }
-		}
-		e_latin_empire = {
-			holder_scoper = { narrative_event = { id = AFRREL.017 } }
-		}
-		
 		allow = {
 			OR = {
-				religion = amazigh_reformed
+                custom_tooltip = {
+                    text = is_reformed_amazigh_tooltip
+                    religion = amazigh_reformed
+                }
 				religion = canaanite_pagan
 				religion = canaanite_pagan_reformed
 			}
@@ -308,9 +359,22 @@ decisions = {
 					}
 				}
 				narrative_event = { id = carthage.05 }
+                
+                e_roman_empire = {
+                    holder_scoper = { narrative_event = { id = AFRREL.017 } }
+                }
+                e_hre = {
+                    holder_scoper = { narrative_event = { id = AFRREL.017 } }
+                }
+                e_byzantium = {
+                    holder_scoper = { narrative_event = { id = AFRREL.017 } }
+                }
+                e_latin_empire = {
+                    holder_scoper = { narrative_event = { id = AFRREL.017 } }
+                }
 			}
 			else = {
-				letter_event = { id = AFRREL.016 days = 7 }
+				narrative_event = { id = AFRREL.016 }
 			}
 			
 			prestige = 1000

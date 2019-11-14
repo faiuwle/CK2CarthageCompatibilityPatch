@@ -1,3 +1,0 @@
-## Compatibility for DL-ARO localisation
-
-EVTDESC_AFRREL017_CANAANITE;A most odd situation has recently arrisen in North Africa as the thought long-dead Carthaginians have risen to prominence again. As a one of the few claimants to Roman glories, this Canaanite heathen whom they call [From.GetFirstName] has insulted your supremacy with their restorative acts. Subsequently, it now falls to you to serve your country and fight these pesky Carthaginians and bury them in the dirt like the ancients long ago!;;;;;;;;;;;;x
