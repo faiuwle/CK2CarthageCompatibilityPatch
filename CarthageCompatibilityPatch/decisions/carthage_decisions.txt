@@ -1158,7 +1158,13 @@ decisions = {
 		}
 		
 		allow = {
-			NOT = { religion = amazigh }
+            OR = {
+                culture_group = phoenicio-punic
+                custom_tooltip = {
+                    text = is_reformed_amazigh_tooltip
+                    religion = amazigh_reformed
+                }
+            }
 			OR = {
 				AND = {
 					completely_controls = k_jerusalem
